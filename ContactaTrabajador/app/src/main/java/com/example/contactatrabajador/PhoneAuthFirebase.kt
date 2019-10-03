@@ -1,8 +1,6 @@
 package com.example.contactatrabajador
 
 import android.app.Activity
-import android.content.Intent
-import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.*
@@ -12,14 +10,12 @@ object PhoneAuthFirebase  : Autentificacion {
 
     private var auth : FirebaseAuth = FirebaseAuth.getInstance() //objeto de Firebase para almacenar los datos del usuario
     var verificationId : String = ""
-    var fCompletado : () -> Unit = {}
-    var fSmsEnviado : () -> Unit = {}
-    var fFallo : () -> Unit = {}
-    lateinit var activity: Activity
-    lateinit var callbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private var fCompletado : () -> Unit = {}
+    private var fSmsEnviado : () -> Unit = {}
+    private var fFallo : () -> Unit = {}
+    private lateinit var callbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
-    fun singleton(fCompletado : () -> Unit, fSmsEnviado : () -> Unit, fFallo : () -> Unit, activity : Activity) : Autentificacion {
-        this.activity = activity
+    fun singleton(fCompletado : () -> Unit, fSmsEnviado : () -> Unit, fFallo : () -> Unit) : Autentificacion {
         this.fCompletado = fCompletado
         this.fSmsEnviado = fSmsEnviado
         this.fFallo = fFallo
@@ -56,14 +52,14 @@ object PhoneAuthFirebase  : Autentificacion {
         return this.auth.currentUser
     }
 
-    override fun ingresar( valor : String?) {
+    override fun ingresar( valor : String?, activity : Activity?) {
         if (this.verificationId.equals("")){
             val num : String = "+51"+valor
             PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 num, // Phone number to verify
                 60, // Timeout duration
                 TimeUnit.SECONDS, // Unit of timeout
-                activity, // Activity (for callback binding)
+                activity!!, // Activity (for callback binding)
                 this.callbacks) // OnVerificationStateChangedCallbacks
         }
         else{
@@ -79,7 +75,7 @@ object PhoneAuthFirebase  : Autentificacion {
 
     }
 
-    fun confirmarNumero(codigo : String?){
+    private fun confirmarNumero(codigo : String?){
         val credential: PhoneAuthCredential = PhoneAuthProvider.getCredential(this.verificationId, codigo.toString())
         auth.signInWithCredential(credential)
             .addOnCompleteListener {

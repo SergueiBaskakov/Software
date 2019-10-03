@@ -10,27 +10,24 @@ class AutentificacionNumero : AppCompatActivity() {
     var BD : BaseDeDatos = FirestoreBD.singleton(PhoneAuthFirebase.singleton(
         fun () : Unit {
             startActivity(Intent(this, MainActivity::class.java))
-            Log.e("fcompletado","true")},
+            },
         fun () : Unit {
             editText.setText(null)
             editText.setHint("Codigo de confirmacion")
             button.setText("Ingresar")
-            Log.e("fSmsEnviado","true")
-
         },
         fun () : Unit {
             editText.setText(null)
             editText.setHint("Numero Celular")
             button.setText("Enviar Codigo")
-            Log.e("fFallo","true")
-        },this))
+        }))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_autentificacion_numero)
         button.setOnClickListener{
             val dato : String = editText.text.toString()
-            BD.ingresar(dato)
+            BD.ingresar(dato, this)
         }
     }
 }

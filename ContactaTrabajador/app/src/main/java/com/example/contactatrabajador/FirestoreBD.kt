@@ -1,5 +1,7 @@
 package com.example.contactatrabajador
 
+import android.app.Activity
+
 object FirestoreBD : BaseDeDatos {
 
     // objeto utilizado para el manejo del usuario
@@ -19,8 +21,8 @@ object FirestoreBD : BaseDeDatos {
 
     }
 
-    override fun ingresar(valor : String?) {
-        this.auth!!.ingresar(valor)
+    override fun ingresar(valor : String?, activity : Activity?) {
+        this.auth!!.ingresar(valor,activity)
     }
 
     override fun registrar() {

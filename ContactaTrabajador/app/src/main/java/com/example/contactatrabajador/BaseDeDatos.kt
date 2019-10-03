@@ -9,4 +9,5 @@ interface BaseDeDatos {
     fun ingresar(valor : String? =  null)
     fun salir()
     fun registrar()
+    fun retornarUsuario() : Any?
 }

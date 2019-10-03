@@ -1,20 +1,34 @@
 package com.example.contactatrabajador
 
-class FirestoreBD (autentificacion : Autentificacion) : BaseDeDatos {
+object FirestoreBD : BaseDeDatos {
 
     // objeto utilizado para el manejo del usuario
-    var auth : Autentificacion = autentificacion
+    var auth : Autentificacion? = null
+    fun singleton(autentificacion : Autentificacion) : BaseDeDatos{
+        this.auth  = autentificacion
+        return this
+    }
+
+    override fun retornarUsuario() : Any?{
+        if (this.auth!=null){
+            return this.auth!!.retornarUsuario()
+        }
+        else{
+            return null
+        }
+
+    }
 
     override fun ingresar(valor : String?) {
-        this.auth.ingresar(valor)
+        this.auth!!.ingresar(valor)
     }
 
     override fun registrar() {
-        this.auth.registrar()
+        this.auth!!.registrar()
     }
 
     override fun salir() {
-        this.auth.salir()
+        this.auth!!.salir()
     }
 
     override fun obtener() {

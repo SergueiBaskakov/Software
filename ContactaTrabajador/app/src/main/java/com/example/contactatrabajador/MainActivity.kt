@@ -6,24 +6,24 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
-    lateinit var mAuth: FirebaseAuth
+    var BD : BaseDeDatos = FirestoreBD
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        mAuth = FirebaseAuth.getInstance()
+
         salir.setOnClickListener {
-                view: View? -> mAuth.signOut()
+            BD.salir()
             startActivity(Intent(this, AutentificacionNumero::class.java))
         }
     }
 
     override fun onStart() {
         super.onStart()
-        if (mAuth.currentUser == null) {
+        if (BD.retornarUsuario() == null) {
             startActivity(Intent(this, AutentificacionNumero::class.java))
         }else {
 

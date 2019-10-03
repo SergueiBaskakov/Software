@@ -89,6 +89,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "16894724472-hgb7ts954dpsuv9jj3s7v8ebm9ke3uu2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.contactatrabajador",
+            "certificate_hash": "0d85eab14ba1e05690db4f1faf6d61c24f440ad3"
+          }
+        },
+        {
           "client_id": "16894724472-igs2oa4k1p45t2j8dr7qfuu13bpq6t1s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

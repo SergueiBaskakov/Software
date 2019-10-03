@@ -3,7 +3,7 @@ package com.example.contactatrabajador
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class RegistroDatosPersonales : AppCompatActivity() {
+class RegistroDatosPersonales_1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

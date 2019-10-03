@@ -12,7 +12,7 @@ class AutentificacionNumero : AppCompatActivity() {
         bd.singleton(PhoneAuthFirebase.singleton(
             fun () {
                 if(bd.obtener("Trabajador/${bd.retornarUsuario()}")==null){
-                    startActivity(Intent(this, RegistroDatosPersonales::class.java))
+                    startActivity(Intent(this, RegistroDatosPersonales_1::class.java))
                 }
                 else{
                     startActivity(Intent(this, MainActivity::class.java))

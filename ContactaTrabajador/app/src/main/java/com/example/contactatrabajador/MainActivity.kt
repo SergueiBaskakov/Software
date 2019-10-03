@@ -10,23 +10,21 @@ import com.google.firebase.auth.PhoneAuthCredential
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    var BD : BaseDeDatos = FirestoreBD
+    var bd : BaseDeDatos = FirestoreBD
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         salir.setOnClickListener {
-            BD.salir()
+            bd.salir()
             startActivity(Intent(this, AutentificacionNumero::class.java))
         }
     }
 
     override fun onStart() {
         super.onStart()
-        if (BD.retornarUsuario() == null) {
+        if (bd.retornarUsuario() == null) {
             startActivity(Intent(this, AutentificacionNumero::class.java))
-        }else {
-
         }
     }
 }

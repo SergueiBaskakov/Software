@@ -5,6 +5,7 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.model.Document
 
 object FirestoreBD : BaseDeDatos {
@@ -12,6 +13,7 @@ object FirestoreBD : BaseDeDatos {
     // objeto utilizado para el manejo del usuario
     private var db : FirebaseFirestore  = FirebaseFirestore.getInstance()
     var auth : Autentificacion? = null
+
     fun singleton(autentificacion : Autentificacion) : BaseDeDatos{
         this.auth  = autentificacion
         return this
@@ -39,8 +41,10 @@ object FirestoreBD : BaseDeDatos {
         this.auth!!.salir()
     }
 
-    override fun obtener(ubicacion : String) : Any? { //jalar documentos una sola vez
-        var doc : Any? = null
+
+
+    override fun obtener(ubicacion : String) : DocumentSnapshot? { //jalar documentos una sola vez //modificar lueguito
+        var doc : DocumentSnapshot? = null
         db.document(ubicacion).get()
             .addOnSuccessListener { document ->
                 doc = document
@@ -51,8 +55,9 @@ object FirestoreBD : BaseDeDatos {
         return doc
     }
 
-    override fun enviar() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun enviar(hashMap : HashMap<String, Any>, ubicacion : String) {
+        val doc = db.document(ubicacion)
+        doc.set(hashMap, SetOptions.merge())
     }
 
     override fun reemplazar() {

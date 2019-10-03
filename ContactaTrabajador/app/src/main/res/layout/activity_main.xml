@@ -8,17 +8,13 @@
 
     <Button
         android:id="@+id/salir"
-        android:layout_width="34dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="95dp"
-        android:layout_marginLeft="95dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_width="35dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="2dp"
         android:text="X"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -47,52 +43,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="306dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:ems="10"
-        android:hint="Nombre"
-        android:inputType="textPersonName"
+    <TextView
+        android:id="@+id/nombreView"
+        android:layout_width="262dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="29dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:text="Nombre"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <EditText
-        android:id="@+id/editText7"
-        android:layout_width="306dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:ems="10"
-        android:hint="Documento de Identidad"
-        android:inputType="number"
+    <TextView
+        android:id="@+id/especialidadView"
+        android:layout_width="262dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:text="Especialdad"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/numeroView" />
 
-    <EditText
-        android:id="@+id/editText6"
-        android:layout_width="306dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:ems="10"
-        android:hint="Direccion"
-        android:inputType="textPersonName"
+    <TextView
+        android:id="@+id/dniView"
+        android:layout_width="262dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:text="DNI"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/nombreView" />
+
+    <TextView
+        android:id="@+id/numeroView"
+        android:layout_width="262dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="73dp"
+        android:layout_marginLeft="73dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:text="Numero"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dniView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,5 +9,5 @@ class Certificado {
     var id : String = ""
     var institucion : String = ""
     var titulo : String = ""
-    lateinit var trabajador : Trabajador
+    var trabajador : String = ""
 }

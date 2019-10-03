@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         salir.setOnClickListener {
             bd.salir()
             startActivity(Intent(this, AutentificacionNumero::class.java))
@@ -22,6 +21,11 @@ class MainActivity : AppCompatActivity() {
         if (bd.retornarUsuario() == null) {
             startActivity(Intent(this, AutentificacionNumero::class.java))
         }
+        var trabajador : TrabajadorPrueba= TrabajadorPrueba
+        numeroView.setText(trabajador.data.numero.toString())
+        nombreView.setText(trabajador.data.nombre)
+        dniView.setText(trabajador.data.documento)
+        especialidadView.setText(trabajador.data.trabajosOfrecidos.nodeAtIndex(0)?.value)
     }
 }
 

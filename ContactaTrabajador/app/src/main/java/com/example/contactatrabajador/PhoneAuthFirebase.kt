@@ -49,7 +49,7 @@ object PhoneAuthFirebase  : Autentificacion {
     }
 
     override fun retornarUsuario() : Any?{
-        return this.auth.currentUser
+        return this.auth.currentUser!!.uid
     }
 
     override fun ingresar( valor : String?, activity : Activity?) {

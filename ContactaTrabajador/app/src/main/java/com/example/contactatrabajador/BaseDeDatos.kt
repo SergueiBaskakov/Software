@@ -4,7 +4,7 @@ import android.app.Activity
 
 interface BaseDeDatos {
     fun conectar()
-    fun obtener()
+    fun obtener(ubicacion : String) : Any?
     fun enviar()
     fun reemplazar()
     fun escuchar()

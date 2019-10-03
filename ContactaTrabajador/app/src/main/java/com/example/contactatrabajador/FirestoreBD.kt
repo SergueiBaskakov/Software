@@ -1,10 +1,16 @@
 package com.example.contactatrabajador
 
 import android.app.Activity
+import android.content.ContentValues.TAG
+import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.model.Document
 
 object FirestoreBD : BaseDeDatos {
 
     // objeto utilizado para el manejo del usuario
+    private var db : FirebaseFirestore  = FirebaseFirestore.getInstance()
     var auth : Autentificacion? = null
     fun singleton(autentificacion : Autentificacion) : BaseDeDatos{
         this.auth  = autentificacion
@@ -33,8 +39,16 @@ object FirestoreBD : BaseDeDatos {
         this.auth!!.salir()
     }
 
-    override fun obtener() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun obtener(ubicacion : String) : Any? { //jalar documentos una sola vez
+        var doc : Any? = null
+        db.document(ubicacion).get()
+            .addOnSuccessListener { document ->
+                doc = document
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+        return doc
     }
 
     override fun enviar() {

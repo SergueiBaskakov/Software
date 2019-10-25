@@ -7,4 +7,5 @@ interface Autentificacion {
     fun salir()
     fun registrar()
     fun retornarUsuario() : Any?
+    fun retornarUsuarioNumero() : Any?
 }

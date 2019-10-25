@@ -34,6 +34,15 @@ object FirestoreBD : BaseDeDatos {
 
     }
 
+    override fun retornarUsuarioNumero() : Any?{
+        if (this.auth!=null){
+            return this.auth!!.retornarUsuarioNumero()
+        }
+        else{
+            return null
+        }
+    }
+
     override fun ingresar(valor : String?, activity : Activity?) {
         this.auth!!.ingresar(valor,activity)
     }
@@ -48,10 +57,9 @@ object FirestoreBD : BaseDeDatos {
 
 
 
-    override fun obtener(ubicacion : String) : Map<String, Any>? { //jalar documentos una sola vez //modificar lueguito
-        var map: Map<String, Any>? = null
+    override fun obtener(ubicacion : String) : MutableMap<String, Any>? { //jalar documentos una sola vez //modificar lueguito
+        var map: MutableMap<String, Any>? = null
         val doc = db.document(ubicacion)
-
         await(doc.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot> { task ->
             if (task.isSuccessful) {
                 val document = task.result
@@ -64,14 +72,30 @@ object FirestoreBD : BaseDeDatos {
                 map = null
             }
         }))
-
         return map
-
     }
 
-    override fun enviar(hashMap : Map<String, Any>, ubicacion : String) {
+    override fun obtener(ubicacion : String, fCompletado : (map: MutableMap<String, Any>?)->Unit) : Unit { //jalar documentos una sola vez //modificar lueguito
+        var map: MutableMap<String, Any>? = null
         val doc = db.document(ubicacion)
-        doc.set(hashMap, SetOptions.merge())
+        doc.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot> { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document != null) {
+                    map = document.data
+                    fCompletado(map)
+                } else {
+                    map = null
+                }
+            } else {
+                map = null
+            }
+        })
+    }
+
+    override fun enviar(map : MutableMap<String, Any>, ubicacion : String) {
+        val doc = db.document(ubicacion)
+        doc.set(map, SetOptions.merge())
     }
 
     override fun reemplazar() {

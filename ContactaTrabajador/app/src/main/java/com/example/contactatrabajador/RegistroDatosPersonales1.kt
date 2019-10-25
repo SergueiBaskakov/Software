@@ -12,12 +12,13 @@ class RegistroDatosPersonales1 : AppCompatActivity() {
         var bd : BaseDeDatos = FirestoreBD
         setContentView(R.layout.activity_registro_datos_personales)
         siguienteBoton.setOnClickListener {
-            var trabajador: TrabajadorPrueba = TrabajadorPrueba
-            trabajador.data.nombre = nombreText.text.toString()
-            trabajador.data.documento = dniText.text.toString()
-            trabajador.data.trabajosOfrecidos.append(especialidadText.text.toString())
-            trabajador.data.id = bd.retornarUsuario().toString()
-            trabajador.data.enviar(bd,"Trabajador_modelo/${bd.retornarUsuario()}")
+            var trabajador: Trabajador = TrabajadorPrueba.data
+            trabajador.agregarDatos("documento",dniText.text.toString())
+            trabajador.agregarDatos("id",bd.retornarUsuario().toString())
+            trabajador.agregarDatos("nombre",nombreText.text.toString())
+            trabajador.agregarDatos("numero",bd.retornarUsuarioNumero() as Number)
+            trabajador.agregarDatos("trabajosofrecidos",especialidadText.text.toString(),true)
+            trabajador.enviar(bd,"Trabajador_modelo/${trabajador.datos!!["ID"].toString()}")
             startActivity(Intent(this, MainActivity::class.java))
         }
     }

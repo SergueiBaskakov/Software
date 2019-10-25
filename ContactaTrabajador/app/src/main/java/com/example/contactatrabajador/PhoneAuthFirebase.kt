@@ -57,6 +57,14 @@ object PhoneAuthFirebase  : Autentificacion {
             return null
         }
     }
+    override fun retornarUsuarioNumero() : Any?{
+        if (this.auth.currentUser!=null){
+            return this.auth.currentUser!!.phoneNumber
+        }
+        else{
+            return null
+        }
+    }
 
     override fun ingresar( valor : String?, activity : Activity?) {
         if (this.verificationId.equals("")){

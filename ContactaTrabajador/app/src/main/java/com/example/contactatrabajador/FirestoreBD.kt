@@ -2,17 +2,22 @@ package com.example.contactatrabajador
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Tasks.await
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.model.Document
 
+
 object FirestoreBD : BaseDeDatos {
 
     // objeto utilizado para el manejo del usuario
-    private var db : FirebaseFirestore  = FirebaseFirestore.getInstance()
-    var auth : Autentificacion? = null
+    var db : FirebaseFirestore  = FirebaseFirestore.getInstance()
+    var auth : Autentificacion? = PhoneAuthFirebase
 
     fun singleton(autentificacion : Autentificacion) : BaseDeDatos{
         this.auth  = autentificacion
@@ -43,19 +48,28 @@ object FirestoreBD : BaseDeDatos {
 
 
 
-    override fun obtener(ubicacion : String) : DocumentSnapshot? { //jalar documentos una sola vez //modificar lueguito
-        var doc : DocumentSnapshot? = null
-        db.document(ubicacion).get()
-            .addOnSuccessListener { document ->
-                doc = document
+    override fun obtener(ubicacion : String) : Map<String, Any>? { //jalar documentos una sola vez //modificar lueguito
+        var map: Map<String, Any>? = null
+        val doc = db.document(ubicacion)
+
+        await(doc.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot> { task ->
+            if (task.isSuccessful) {
+                val document = task.result
+                if (document != null) {
+                    map = document.data
+                } else {
+                    map = null
+                }
+            } else {
+                map = null
             }
-            .addOnFailureListener { exception ->
-                Log.d(TAG, "get failed with ", exception)
-            }
-        return doc
+        }))
+
+        return map
+
     }
 
-    override fun enviar(hashMap : HashMap<String, Any>, ubicacion : String) {
+    override fun enviar(hashMap : Map<String, Any>, ubicacion : String) {
         val doc = db.document(ubicacion)
         doc.set(hashMap, SetOptions.merge())
     }

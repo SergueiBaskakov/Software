@@ -3,10 +3,12 @@ package com.example.contactatrabajador
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    var bd : BaseDeDatos = FirestoreBD
+    var bd  = FirestoreBD
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -18,9 +20,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        Log.i("inicio()", "0")
+
         if (bd.retornarUsuario() == null) {
+            Toast.makeText(this, bd.auth.toString(), Toast.LENGTH_SHORT).show()
+            //Thread.sleep(5_000)
             startActivity(Intent(this, AutentificacionNumero::class.java))
         }
+        Toast.makeText(this, bd.retornarUsuario().toString(), Toast.LENGTH_SHORT).show()
         var trabajador : TrabajadorPrueba= TrabajadorPrueba
         numeroView.setText(trabajador.data.numero.toString())
         nombreView.setText(trabajador.data.nombre)

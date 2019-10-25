@@ -4,12 +4,16 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.android.synthetic.main.activity_autentificacion_numero.*
 
 class AutentificacionNumero : AppCompatActivity() {
     var bd  = FirestoreBD
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         bd.auth = PhoneAuthFirebase.singleton(
             fun () {
                 if(bd.obtener("Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}")==null){

@@ -26,7 +26,7 @@ class Trabajador {
 
     fun enviar(db: BaseDeDatos, ubicacion : String){
         db.enviar(
-            hashMapOf(
+            mapOf(
                 "NOMBRE" to this.nombre,
                 "DOCUMENTO" to this.documento,
                 "TRABAJOSOFRECIDOS" to this.trabajosOfrecidos.toString(),

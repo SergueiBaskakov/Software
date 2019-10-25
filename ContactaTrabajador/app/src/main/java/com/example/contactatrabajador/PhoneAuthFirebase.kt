@@ -15,6 +15,7 @@ object PhoneAuthFirebase  : Autentificacion {
     private var fFallo : () -> Unit = {}
     private lateinit var callbacks : PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
+
     fun singleton(fCompletado : () -> Unit, fSmsEnviado : () -> Unit, fFallo : () -> Unit) : Autentificacion {
         this.fCompletado = fCompletado
         this.fSmsEnviado = fSmsEnviado
@@ -26,10 +27,10 @@ object PhoneAuthFirebase  : Autentificacion {
                 auth.signInWithCredential(credential)
                     .addOnCompleteListener {
                             task: Task<AuthResult> ->
-                        if (task.isSuccessful) {
-                            verificationId = ""
-                            fCompletado()
-                        }
+                                if (task.isSuccessful) {
+                                    verificationId = ""
+                                    fCompletado()
+                                }
                     }
             }
 
@@ -49,7 +50,12 @@ object PhoneAuthFirebase  : Autentificacion {
     }
 
     override fun retornarUsuario() : Any?{
-        return this.auth.currentUser!!.uid
+        if (this.auth.currentUser!=null){
+            return this.auth.currentUser!!.uid
+        }
+        else{
+            return null
+        }
     }
 
     override fun ingresar( valor : String?, activity : Activity?) {

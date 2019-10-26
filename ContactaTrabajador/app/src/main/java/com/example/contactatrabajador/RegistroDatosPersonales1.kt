@@ -16,7 +16,7 @@ class RegistroDatosPersonales1 : AppCompatActivity() {
             trabajador.agregarDatos("documento",dniText.text.toString())
             trabajador.agregarDatos("id",bd.retornarUsuario().toString())
             trabajador.agregarDatos("nombre",nombreText.text.toString())
-            trabajador.agregarDatos("numero",bd.retornarUsuarioNumero() as Number)
+            trabajador.agregarDatos("numero",bd.retornarUsuarioNumero()!!)
             trabajador.agregarDatos("trabajosofrecidos",especialidadText.text.toString(),true)
             trabajador.enviar(bd,"Trabajador_modelo/${trabajador.datos!!["ID"].toString()}")
             startActivity(Intent(this, MainActivity::class.java))

@@ -5,8 +5,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 interface BaseDeDatos {
     fun conectar()
-    fun obtener(ubicacion : String, fCompletado : (map: MutableMap<String, Any>?)->Unit) : Unit /////
-    fun obtener(ubicacion : String) : MutableMap<String, Any>?
+    fun obtener(ubicacion : String, fCompletado : (map: MutableMap<String, Any>?)->Unit, fInexistente : ()->Unit = fun(){},fFallo : ()->Unit = fun(){}) : Unit /////
+    //fun obtener(ubicacion : String) : MutableMap<String, Any>?
     fun enviar(map : MutableMap<String, Any>, ubicacion : String)
     fun reemplazar()
     fun escuchar()

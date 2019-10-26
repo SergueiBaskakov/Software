@@ -16,13 +16,14 @@ class AutentificacionNumero : AppCompatActivity() {
 
         bd.auth = PhoneAuthFirebase.singleton(
             fun () {
-                if(bd.obtener("Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}")==null){
-                    startActivity(Intent(this, RegistroDatosPersonales1::class.java))
-                }
-                else{
+                bd.obtener("Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}",fun(map : MutableMap<String,Any>?){
                     startActivity(Intent(this, MainActivity::class.java))
-                }
-            },
+                    //startActivity(Intent(this, RegistroDatosPersonales1::class.java))
+                },fun(){
+                    startActivity(Intent(this, RegistroDatosPersonales1::class.java))
+                },fun(){
+                    startActivity(Intent(this, RegistroDatosPersonales1::class.java))
+                })},
             fun () {
                 editText.setText(null)
                 editText.setHint("Codigo de confirmacion")

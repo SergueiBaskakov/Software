@@ -34,7 +34,7 @@ class Trabajador {
 
     fun verDatos(llave: String) : Any?{
         if(this.datos != null){
-            return this.datos!![llave]
+            return this.datos!![llave.toUpperCase()]
         }
         else{
             return null

@@ -57,7 +57,7 @@ object FirestoreBD : BaseDeDatos {
 
 
 
-    override fun obtener(ubicacion : String) : MutableMap<String, Any>? { //jalar documentos una sola vez //modificar lueguito
+    /*override fun obtener(ubicacion : String) : MutableMap<String, Any>? { //jalar documentos una sola vez //modificar lueguito
         var map: MutableMap<String, Any>? = null
         val doc = db.document(ubicacion)
         await(doc.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot> { task ->
@@ -73,9 +73,9 @@ object FirestoreBD : BaseDeDatos {
             }
         }))
         return map
-    }
+    }*/
 
-    override fun obtener(ubicacion : String, fCompletado : (map: MutableMap<String, Any>?)->Unit) : Unit { //jalar documentos una sola vez //modificar lueguito
+    override fun obtener(ubicacion : String, fCompletado : (map: MutableMap<String, Any>?)->Unit, fInexistente : ()->Unit,fFallo : ()->Unit) : Unit { //jalar documentos una sola vez //modificar lueguito
         var map: MutableMap<String, Any>? = null
         val doc = db.document(ubicacion)
         doc.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot> { task ->
@@ -86,9 +86,11 @@ object FirestoreBD : BaseDeDatos {
                     fCompletado(map)
                 } else {
                     map = null
+                    fInexistente()
                 }
             } else {
                 map = null
+                fFallo()
             }
         })
     }

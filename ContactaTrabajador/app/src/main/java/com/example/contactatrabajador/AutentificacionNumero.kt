@@ -13,10 +13,10 @@ class AutentificacionNumero : AppCompatActivity() {
     var bd  = FirestoreBD
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         bd.auth = PhoneAuthFirebase.singleton(
             fun () {
                 bd.obtener("Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}",fun(map : MutableMap<String,Any>?){
+                    //Toast.makeText(this, map.toString(), Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     //startActivity(Intent(this, RegistroDatosPersonales1::class.java))
                 },fun(){

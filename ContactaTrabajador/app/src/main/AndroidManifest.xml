@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistroDatosPersonales1"></activity>
+        <activity
+            android:name=".PantallaPrincipal"
+            android:label="@string/title_activity_pantalla_principal"></activity>
+        <activity android:name=".RegistroDatosPersonales1" />
         <activity android:name=".AutentificacionNumero" />
         <activity android:name=".MainActivity">
             <intent-filter>

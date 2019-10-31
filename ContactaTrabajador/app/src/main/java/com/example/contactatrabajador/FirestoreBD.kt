@@ -80,10 +80,17 @@ object FirestoreBD : BaseDeDatos {
         val doc = db.document(ubicacion)
         doc.get().addOnCompleteListener(OnCompleteListener<DocumentSnapshot> { task ->
             if (task.isSuccessful) {
+                map = null
                 val document = task.result
                 if (document != null) {
                     map = document.data
-                    fCompletado(map)
+                    if(map!=null){
+                        fCompletado(map)
+                    }
+                    else{
+                        map = null
+                        fInexistente()
+                    }
                 } else {
                     map = null
                     fInexistente()

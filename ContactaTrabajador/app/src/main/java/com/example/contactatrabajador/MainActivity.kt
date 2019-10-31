@@ -20,17 +20,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        //startActivity(Intent(this, PantallaPrincipal::class.java))
         if (bd.retornarUsuario() == null) {
             startActivity(Intent(this, AutentificacionNumero::class.java))
         }
         else{
-            var trabajador : Trabajador= TrabajadorPrueba.data
+            startActivity(Intent(this, PantallaPrincipal::class.java))
+            /*var trabajador : Trabajador= TrabajadorPrueba.data
             trabajador.obtener(bd,"Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}",fun(){
                 numeroView.setText(trabajador.verDatos("NUMERO").toString())
                 nombreView.setText(trabajador.verDatos("NOMBRE").toString())
                 dniView.setText(trabajador.verDatos("DOCUMENTO").toString())
                 especialidadView.setText(trabajador.verDatos("trabajosofrecidos").toString())
-            })
+            })*/
 
         }
     }

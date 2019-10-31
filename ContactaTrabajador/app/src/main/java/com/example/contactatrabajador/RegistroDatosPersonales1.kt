@@ -5,14 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_registro_datos_personales.*
 
+
 class RegistroDatosPersonales1 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var trabajador : Trabajador = TrabajadorPrueba.data
         var bd : BaseDeDatos = FirestoreBD
         setContentView(R.layout.activity_registro_datos_personales)
+        if(trabajador != null){
+            dniText.setText(trabajador.verDatos("documento").toString())
+            nombreText.setText(trabajador.verDatos("nombre").toString())
+            especialidadText.setText(trabajador.verDatos("trabajosofrecidos").toString())
+        }
         siguienteBoton.setOnClickListener {
-            var trabajador: Trabajador = TrabajadorPrueba.data
+            //var trabajador: Trabajador = TrabajadorPrueba.data
             trabajador.agregarDatos("documento",dniText.text.toString())
             trabajador.agregarDatos("id",bd.retornarUsuario().toString())
             trabajador.agregarDatos("nombre",nombreText.text.toString())

@@ -33,16 +33,15 @@ class HomeFragment : Fragment() {
             textView.text = it
         })*/
         var bd  = FirestoreBD
-
+        var trabajador : Trabajador = TrabajadorPrueba.data
         root.salirPerfil.setOnClickListener {
             bd.salir()
-            TrabajadorPrueba.data.datos=null
+            trabajador.datos=null
             startActivity(Intent(getActivity(), AutentificacionNumero::class.java))
         }
         root.editarPerfil.setOnClickListener{
             startActivity(Intent(getActivity(), RegistroDatosPersonales1::class.java))
         }
-        var trabajador : Trabajador = TrabajadorPrueba.data
         if(trabajador.datos==null){
             trabajador.obtener(bd,"Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}",fun(){
                 root.numeroPerfil.setText(trabajador.verDatos("NUMERO").toString())

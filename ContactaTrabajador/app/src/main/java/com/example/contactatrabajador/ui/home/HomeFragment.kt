@@ -36,18 +36,28 @@ class HomeFragment : Fragment() {
 
         root.salirPerfil.setOnClickListener {
             bd.salir()
+            TrabajadorPrueba.data.datos=null
             startActivity(Intent(getActivity(), AutentificacionNumero::class.java))
         }
         root.editarPerfil.setOnClickListener{
             startActivity(Intent(getActivity(), RegistroDatosPersonales1::class.java))
         }
         var trabajador : Trabajador = TrabajadorPrueba.data
-        trabajador.obtener(bd,"Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}",fun(){
-            numeroPerfil.setText(trabajador.verDatos("NUMERO").toString())
-            nombrePerfil.setText(trabajador.verDatos("NOMBRE").toString())
-            dniPerfil.setText(trabajador.verDatos("DOCUMENTO").toString())
-            especialidadPerfil.setText(trabajador.verDatos("trabajosofrecidos").toString())
-        })
+        if(trabajador.datos==null){
+            trabajador.obtener(bd,"Trabajador_modelo/${PhoneAuthFirebase.retornarUsuario()}",fun(){
+                root.numeroPerfil.setText(trabajador.verDatos("NUMERO").toString())
+                root.nombrePerfil.setText(trabajador.verDatos("NOMBRE").toString())
+                root.dniPerfil.setText(trabajador.verDatos("DOCUMENTO").toString())
+                root.especialidadPerfil.setText(trabajador.verDatos("trabajosofrecidos").toString())
+            })
+        }
+        else{
+            root.numeroPerfil.setText(trabajador.verDatos("NUMERO").toString())
+            root.nombrePerfil.setText(trabajador.verDatos("NOMBRE").toString())
+            root.dniPerfil.setText(trabajador.verDatos("DOCUMENTO").toString())
+            root.especialidadPerfil.setText(trabajador.verDatos("trabajosofrecidos").toString())
+        }
+
         return root
     }
 }

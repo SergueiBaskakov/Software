@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_notifications.view.*
 import android.widget.RelativeLayout
 import androidx.core.view.marginLeft
 import com.google.firebase.firestore.model.value.IntegerValue
+import java.util.ArrayList
 import java.util.zip.Inflater
 
 
@@ -40,6 +41,7 @@ class NotificationsFragment : Fragment() {
             ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         val root = inflater.inflate(com.example.contactatrabajador.R.layout.fragment_notifications, container, false)
         var bd  = FirestoreBD
+        var cantMen = 0
 
         lateinit var chatAdmin : String
         if(TrabajadorPrueba.data.verDatos("chatAdmin")==null){
@@ -115,17 +117,18 @@ class NotificationsFragment : Fragment() {
 
                 if(value!!.data!!["MENSAJES"]!=null){
                     //Toast.makeText(getActivity(), "0", Toast.LENGTH_SHORT).show()
-                    root.mensajesLayout.removeAllViewsInLayout()
+                    //root.mensajesLayout.removeAllViewsInLayout()
                     var arreglo = (value!!.data!!["MENSAJES"].toString()).split(", ","[","]")
                     //Toast.makeText(getActivity(), arreglo[1].toString(), Toast.LENGTH_SHORT).show()
                     //Toast.makeText(getActivity(), arreglo[1].toString(), Toast.LENGTH_SHORT).show()
-                    bd.obtener(arreglo[1].toString(),fun(map : MutableMap<String,Any>?){n(map,1,arreglo.count()-2,arreglo,TextView(activity))},fun(){
+                    /*bd.obtener(arreglo[1].toString(),fun(map : MutableMap<String,Any>?){n(map,1,arreglo.count()-2,arreglo,TextView(activity))},fun(){
                         Toast.makeText(getActivity(), "panico", Toast.LENGTH_SHORT).show()
                     },fun(){
                         Toast.makeText(getActivity(), "panico x2", Toast.LENGTH_SHORT).show()
-                    })
+                    })*/
+                    var arregloViews : ArrayList<View> = arrayListOf<View>()
 
-                    /*for(i in 1..(arreglo.count()-2)){
+                    for(i in cantMen+1..(arreglo.count()-2)){
                         var m = TextView(activity)
                         Toast.makeText(getActivity(), i.toString(), Toast.LENGTH_SHORT).show()
                         bd.obtener(arreglo[i].toString(),fun(map : MutableMap<String,Any>?){
@@ -140,11 +143,18 @@ class NotificationsFragment : Fragment() {
                                 m.left = 5
                                 //m.setPadding(0,0,300,0)
                             }
-                            Toast.makeText(getActivity(), m.text.toString(), Toast.LENGTH_SHORT).show()
-                            root.mensajesLayout.addView(m,i-1)
+                            //Toast.makeText(getActivity(), m.text.toString(), Toast.LENGTH_SHORT).show()
+                            //root.mensajesLayout.addView(m,i-1)
+                            arregloViews.add(m)
+                            if(i==arreglo.count()-2){
+                                for(j in 0..(arregloViews.count()-1)){
+                                    root.mensajesLayout.addView(arregloViews[j])
+                                }
+                                cantMen = arreglo.count()-2
+                            }
 
                         },fun(){},fun(){})
-                    }*/
+                    }
                 }
                 else{
                     Toast.makeText(getActivity(), "1", Toast.LENGTH_SHORT).show()

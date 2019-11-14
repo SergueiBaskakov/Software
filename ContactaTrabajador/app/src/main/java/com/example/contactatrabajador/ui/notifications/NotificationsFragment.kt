@@ -137,7 +137,7 @@ class NotificationsFragment : Fragment() {
                             m.width = 300
                             if(map!!["USUARIO"]=="Trabajador_modelo/"+TrabajadorPrueba.data.verDatos("id")){
                                 m.right = 5
-                                m.setPadding(550,0,0,0)
+                                m.setPadding(400,0,0,0)
                             }
                             else{
                                 m.left = 5

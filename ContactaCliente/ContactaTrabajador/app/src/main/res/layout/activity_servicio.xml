@@ -74,14 +74,12 @@
                 android:layout_height="wrap_content"
                 android:text="Costo :" />
 
-            <EditText
+            <TextView
                 android:id="@+id/costoServicio"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberSigned"/>
-
+                android:layout_height="wrap_content" />
         </TableRow>
-  </TableLayout>
+    </TableLayout>
 
     <Button
         android:id="@+id/botonConfirmar"

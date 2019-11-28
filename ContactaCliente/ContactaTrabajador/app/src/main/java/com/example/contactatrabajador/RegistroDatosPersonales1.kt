@@ -14,9 +14,13 @@ class RegistroDatosPersonales1 : AppCompatActivity() {
         var bd : BaseDeDatos = FirestoreBD
         setContentView(R.layout.activity_registro_datos_personales)
         if(trabajador != null){
-            dniText.setText(trabajador.verDatos("documento").toString())
-            nombreText.setText(trabajador.verDatos("nombre").toString())
-            especialidadText.setText(trabajador.verDatos("trabajosofrecidos").toString())
+            if(trabajador.verDatos("documento").toString()!="null"){
+                dniText.setText(trabajador.verDatos("documento").toString())
+            }
+            if(trabajador.verDatos("nombre").toString()!="null"){
+                nombreText.setText(trabajador.verDatos("nombre").toString())
+            }
+            //especialidadText.setText(trabajador.verDatos("trabajosofrecidos").toString())
         }
         siguienteBoton.setOnClickListener {
             //var trabajador: Trabajador = TrabajadorPrueba.data
@@ -24,7 +28,7 @@ class RegistroDatosPersonales1 : AppCompatActivity() {
             trabajador.agregarDatos("id",bd.retornarUsuario().toString())
             trabajador.agregarDatos("nombre",nombreText.text.toString())
             trabajador.agregarDatos("numero",bd.retornarUsuarioNumero()!!)
-            trabajador.agregarDatos("trabajosofrecidos",especialidadText.text.toString(),true)
+            //trabajador.agregarDatos("trabajosofrecidos",especialidadText.text.toString(),true)
             trabajador.enviar(bd,"Cliente_modelo/${trabajador.datos!!["ID"].toString()}")
             startActivity(Intent(this, MainActivity::class.java))
         }

@@ -47,14 +47,14 @@ class HomeFragment : Fragment() {
                 root.numeroPerfil.setText(trabajador.verDatos("NUMERO").toString())
                 root.nombrePerfil.setText(trabajador.verDatos("NOMBRE").toString())
                 root.dniPerfil.setText(trabajador.verDatos("DOCUMENTO").toString())
-                root.especialidadPerfil.setText("")
+                //root.especialidadPerfil.setText("")
             })
         }
         else{
             root.numeroPerfil.setText(trabajador.verDatos("NUMERO").toString())
             root.nombrePerfil.setText(trabajador.verDatos("NOMBRE").toString())
             root.dniPerfil.setText(trabajador.verDatos("DOCUMENTO").toString())
-            root.especialidadPerfil.setText(trabajador.verDatos("trabajosofrecidos").toString())
+            //root.especialidadPerfil.setText(trabajador.verDatos("trabajosofrecidos").toString())
         }
 
         return root

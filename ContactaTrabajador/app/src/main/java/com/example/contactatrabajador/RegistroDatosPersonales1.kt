@@ -14,9 +14,15 @@ class RegistroDatosPersonales1 : AppCompatActivity() {
         var bd : BaseDeDatos = FirestoreBD
         setContentView(R.layout.activity_registro_datos_personales)
         if(trabajador != null){
-            dniText.setText(trabajador.verDatos("documento").toString())
-            nombreText.setText(trabajador.verDatos("nombre").toString())
-            especialidadText.setText(trabajador.verDatos("trabajosofrecidos").toString())
+            if(trabajador.verDatos("documento").toString()!="null"){
+                dniText.setText(trabajador.verDatos("documento").toString())
+            }
+            if(trabajador.verDatos("nombre").toString()!="null"){
+                nombreText.setText(trabajador.verDatos("nombre").toString())
+            }
+            if(trabajador.verDatos("trabajosofrecidos").toString()!="null"){
+                especialidadText.setText(trabajador.verDatos("trabajosofrecidos").toString())
+            }
         }
         siguienteBoton.setOnClickListener {
             //var trabajador: Trabajador = TrabajadorPrueba.data

@@ -1,73 +1,43 @@
-package com.example.contactatrabajador.ui.notifications
+package com.example.contactatrabajador
 
-import android.app.Activity
-import android.app.PendingIntent.getActivity
-import android.content.ContentValues.TAG
+import android.content.ContentValues
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import com.example.contactatrabajador.FirestoreBD
-import com.example.contactatrabajador.R
-import com.example.contactatrabajador.TrabajadorPrueba
 import com.google.firebase.firestore.FieldValue
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_notifications.view.*
-import android.widget.RelativeLayout
-import androidx.core.view.marginLeft
-import com.google.android.gms.tasks.Task
-import com.google.android.gms.tasks.Tasks
-import com.google.android.gms.tasks.Tasks.await
-import com.google.firebase.firestore.model.value.IntegerValue
 import java.util.ArrayList
 import java.util.concurrent.TimeUnit
-import java.util.zip.Inflater
 
+class ChatActivity : AppCompatActivity() {
 
-class NotificationsFragment : Fragment() {
-
-    private lateinit var notificationsViewModel: NotificationsViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        notificationsViewModel =
-            ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
-        val root = inflater.inflate(com.example.contactatrabajador.R.layout.fragment_notifications, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_chat)
+        var chat = intent.getStringExtra("chat")
+        var serId = intent.getStringExtra("id")
         var bd  = FirestoreBD
         var cantMen = 0
-
         lateinit var chatAdmin : String
-        if(TrabajadorPrueba.data.verDatos("chatAdmin")==null){
-
+        Toast.makeText(this, chat.toString(), Toast.LENGTH_SHORT).show()
+        if(chat=="null"){
             var chatId = bd.db.collection("Chat_modelo").document().id
             chatAdmin = "Chat_modelo/" + chatId
             bd.enviar(mutableMapOf(Pair("ID",chatId)),chatAdmin)
-            TrabajadorPrueba.data.agregarDatos("CHATADMIN",chatAdmin)
-            TrabajadorPrueba.data.enviar(bd,"Trabajador_modelo/"+TrabajadorPrueba.data.verDatos("id").toString())
-
+            bd.enviar(mutableMapOf(Pair("CHAT",chatAdmin)),"Servicio_modelo/"+serId)
         }
         else{
-
-            chatAdmin = TrabajadorPrueba.data.verDatos("chatAdmin").toString()
+            chatAdmin = chat
         }
-
-
 
         bd.db.document(chatAdmin)
             .addSnapshotListener { value, e ->
                 if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
+                    Log.w(ContentValues.TAG, "Listen failed.", e)
                     return@addSnapshotListener
                 }
                 botonEnviar.setOnClickListener{
@@ -107,7 +77,7 @@ class NotificationsFragment : Fragment() {
                     var arregloViews : ArrayList<View> = arrayListOf<View>()
 
                     for(i in cantMen+1..(arreglo.count()-2)){
-                        var m = TextView(activity)
+                        var m = TextView(this)
                         //Toast.makeText(getActivity(), i.toString(), Toast.LENGTH_SHORT).show()
                         TimeUnit.MILLISECONDS.sleep(50L)
                         bd.obtener(arreglo[i].toString(),fun(map : MutableMap<String,Any>?){
@@ -130,7 +100,7 @@ class NotificationsFragment : Fragment() {
                                 TimeUnit.MILLISECONDS.sleep(500L)
                                 for(j in 0..(arregloViews.count()-1)){
 
-                                    root.mensajesLayout.addView(arregloViews[j])
+                                    this.mensajesLayout.addView(arregloViews[j])
                                 }
                                 cantMen = arreglo.count()-2
                             }
@@ -139,13 +109,8 @@ class NotificationsFragment : Fragment() {
 
                 }
                 else{
-                    Toast.makeText(getActivity(), "1", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "1", Toast.LENGTH_SHORT).show()
                 }
             }
-        return root
     }
-
 }
-
-
-

@@ -18,6 +18,9 @@ android {
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     buildTypes {
         release {
             minifyEnabled false

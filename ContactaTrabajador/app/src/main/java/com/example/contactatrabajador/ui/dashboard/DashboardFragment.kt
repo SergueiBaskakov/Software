@@ -58,7 +58,9 @@ class DashboardFragment : Fragment() {
                             putExtra("descripcion",document.data["DESCRIPCION"].toString()).
                             putExtra("direccion",document.data["DIRECCION"].toString()).
                             putExtra("id",document.id).
-                            putExtra("estado",document.data["ESTADO"].toString()))
+                            putExtra("estado",document.data["ESTADO"].toString()).
+                            putExtra("chat",document.data["CHAT"].toString()))
+                        //estados : Solicitud, Cotizacion, Aceptado, Finalizado
                     }
                     root.linearLayoutServicios.addView(servicio)
                 }

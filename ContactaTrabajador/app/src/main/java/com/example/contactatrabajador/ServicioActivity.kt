@@ -1,5 +1,6 @@
 package com.example.contactatrabajador
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,27 +17,44 @@ class ServicioActivity : AppCompatActivity() {
         costoServicio.setText(intent.getStringExtra("costo"))
         direccionServicio.setText(intent.getStringExtra("direccion"))
         var id = intent.getStringExtra("id")
+        var estado = intent.getStringExtra("estado")
+        var chat = intent.getStringExtra("chat")
+        Toast.makeText(this, estado.toString(), Toast.LENGTH_SHORT).show()
 
 
-        if (intent.getStringExtra("estado") == "ACEPTADO" || intent.getStringExtra("estado") == "TERMINADO" || intent.getStringExtra("estado") == "CANCELADO"){
-            botonRechazar.isClickable = false
+        if (estado == "ACEPTADO" || estado == "TERMINADO"){
+            botonRechazar.setText("Chat")
         }
-        if (intent.getStringExtra("estado") == "TERMINADO" || intent.getStringExtra("estado") == "CANCELADO"){
+        if (estado == "TERMINADO" || estado == "CANCELADO"){
             botonConfirmar.isClickable = false
+        }
+        if (estado != "COTIZAR"){
+            costoServicio.isEnabled = false
         }
         botonRechazar.setOnClickListener{
-            bd.enviar(mutableMapOf(Pair("ESTADO","cancelado")),"Servicio_modelo/"+id)
-            estadoServicio.setText("Cancelado")
-            botonRechazar.isClickable = false
-            botonConfirmar.isClickable = false
+            if(estado=="COTIZAR" || estado=="CANCELADO"){
+                bd.enviar(mutableMapOf(Pair("ESTADO","CANCELADO")),"Servicio_modelo/"+id)
+                estadoServicio.setText("Cancelado")
+            }
+            else{
+                startActivity(
+                    Intent(this, ChatActivity::class.java).
+                        putExtra("chat",chat).
+                        putExtra("id",id))
+                //estados : Solicitud, Cotizacion, Aceptado, Finalizado
+            }
+
+
         }
         botonConfirmar.setOnClickListener{
-            if(intent.getStringExtra("estado") == "cotizar"){
-                bd.enviar(mutableMapOf(Pair("ESTADO","cotizado")),"Servicio_modelo/"+id)
+            if(estado == "COTIZAR"){
+                bd.enviar(mutableMapOf(Pair("ESTADO","COTIZADO")),"Servicio_modelo/"+id)
+                bd.enviar(mutableMapOf(Pair("COSTO",costoServicio.text.toString())),"Servicio_modelo/"+id)
                 estadoServicio.setText("Cotizado")
+                costoServicio.isEnabled = false
             }
-            else if(intent.getStringExtra("estado") == "aceptado"){
-                bd.enviar(mutableMapOf(Pair("ESTADO","terminado")),"Servicio_modelo/"+id)
+            else if(estado == "ACEPTADO"){
+                bd.enviar(mutableMapOf(Pair("ESTADO","TERMINADO")),"Servicio_modelo/"+id)
                 estadoServicio.setText("Terminado")
                 botonConfirmar.isClickable = false
             }
